@@ -24,14 +24,9 @@ MainWindow::~MainWindow()
 void MainWindow::test_but_click()
 {
     //
-    QString content = configEditor->document()->findBlockByLineNumber(1).text();
-    QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),content,QMessageBox::Ok);
-
-
-    QTextCursor tc;
-       tc =configEditor->textCursor();
-      content = tc.block().text();
-       QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),content,QMessageBox::Ok);
+    //QString content = configEditor->document()->findBlockByLineNumber(1).text();
+    //QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),content,QMessageBox::Ok);
+    QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),configEditor->getCurrRowValue(),QMessageBox::Ok);
 }
 
 

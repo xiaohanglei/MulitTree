@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <src/typedef.h>
 #include <QSyntaxHighlighter>
+#include <QKeyEvent>
 class LineNumberArea;
 
 class CodeEditor : public QPlainTextEdit
@@ -30,6 +31,8 @@ private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &, int);
+    void keyReleaseEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     QWidget *lineNumberArea;

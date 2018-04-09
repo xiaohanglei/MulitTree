@@ -28,7 +28,9 @@ int CodeEditor::lineNumberAreaWidth()
 
 QString CodeEditor::getCurrRowValue()
 {
-
+    QTextCursor tc;
+    tc =this->textCursor();
+    return tc.block().text();
 }
 
 void CodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
@@ -45,6 +47,20 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
+}
+
+void CodeEditor::keyReleaseEvent(QKeyEvent *event)
+{
+
+}
+
+void CodeEditor::keyPressEvent(QKeyEvent *e)
+{
+    if(e->key()==Qt::Key_M)
+    {
+        QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),this->getCurrRowValue(),QMessageBox::Ok);
+    }
+    return QPlainTextEdit::keyPressEvent(e) ;
 }
 
 void CodeEditor::resizeEvent(QResizeEvent *e)

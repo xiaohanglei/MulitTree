@@ -2,7 +2,7 @@
 #include <QString>
 MultiTree::MultiTree(int x)
 {
-
+    root = new TrieNode(0);
 }
 // 插入
 void MultiTree::Insert( QString str)
@@ -15,7 +15,8 @@ void MultiTree::Insert( QString str)
     {
         val = str.at(i).toLatin1() - 'a';
         // 之前没有该字符
-        if (p->next[val] == NULL) {
+        if (p->next[val] == NULL)
+        {
             p->next[val] = new TrieNode(0);
         }//if
         p = p->next[val];

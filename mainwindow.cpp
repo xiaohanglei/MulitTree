@@ -2,6 +2,9 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QTextCharFormat>
+#include <fstream>
+#include <QTextStream>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -19,12 +22,46 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(configEditor,&CodeEditor::signalGetCurrentWord,this,&MainWindow::test_);
 
     list << "lxh" << "hxl" << "xhl" <<"xlh" << "lhx";
+    root = new MultiTree(0);
+    initDictionary();
 }
 
 MainWindow::~MainWindow()
 {
     //QString str;
     //str = textEdt->toPlainText();
+}
+
+void MainWindow::initDictionary()
+{
+    //读取文本
+//    std::ifstream in("dictionary.txt");
+//    QString line;
+//    std::string temp;
+//    while (std::getline(in, temp)) // line中不包括每行的换行符
+//    {
+//            line = QString::fromStdString(temp);
+//          root->Insert(line);
+//            //cout << line<<endl;
+//    }
+
+    QFile dataFile("C:/Users/Administrator/Desktop/build-aweSomeEditorhiahia-Desktop_Qt_5_9_1_MinGW_32bit-Debug/debug/dictionary.txt");
+
+    if (dataFile.open(QFile::ReadOnly|QIODevice::Text))
+    {
+        QTextStream data(&dataFile);
+
+        QString line;
+        while (!data.atEnd())//逐行读取文本，并去除每行的回车
+        {
+            line = data.readLine();
+            line.remove('\n');
+            //root->Insert(line);
+            this->wordsList << line;
+        }
+    }
+    return ;
+
 }
 
 
@@ -46,9 +83,10 @@ void MainWindow::test_()
 
     QString strtemp = tc.block().text();
 
-    for (int i = 0; i < list.size(); i++)
+    for (int i = 0; i < wordsList.size(); i++)
     {
-        if (strtemp == list.at(i))
+        if (strtemp == wordsList.at(i))
+        //if (root->Search(strtemp))
         {
             for (int i = 0 ; i < strtemp.length(); i++)
             {
@@ -57,10 +95,18 @@ void MainWindow::test_()
             }
             tc.insertText(strtemp,keywordFormat);
             configEditor->setFocus();
-            break;
+            tc.setBlockCharFormat(conFormat);
+            return ;
         }
     }
-    tc.setBlockCharFormat(conFormat);
+
+    for (int i = 0 ; i < strtemp.length(); i++)
+    {
+        tc.deletePreviousChar();
+        configEditor->setTextCursor(tc);
+    }
+    tc.insertText(strtemp,conFormat);
+    configEditor->setFocus();
 
 }
 void MainWindow::test_but_click()

@@ -9,6 +9,7 @@
 #include "src/typedef.h"
 #include <QPushButton>
 #include <QLabel>
+#include "trienode.h"
 class MainWindow : public QMainWindow,Ui::MainWindow
 {
     Q_OBJECT
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow,Ui::MainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void initDictionary();
 public slots:
     void test_but_click();
     void test_();
@@ -26,6 +28,8 @@ private:
      QLabel * label_DisplayWord;
      MyHighLighter *highlighter;
      QStringList list;
+     MultiTree * root;
+     QStringList wordsList;
 };
 
 #endif // MAINWINDOW_H

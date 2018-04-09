@@ -1,4 +1,4 @@
-#ifndef TRIENODE_H
+﻿#ifndef TRIENODE_H
 #define TRIENODE_H
 
 #include <QObject>
@@ -7,7 +7,7 @@
 
 struct TrieNode
 {
-    // 以该节点为结尾的单词个数
+    //
     int count;
     TrieNode *next[MAX];
     TrieNode(int x) :count(x) {
@@ -27,16 +27,16 @@ public:
         return root;
     }
 
-    // 插入
+    //插入
     void Insert( QString str);
 
-    // 删除
+    // 鍒犻櫎
     void Delete( QString str);
 
-    // 查找
+    // 鏌ユ壘
     bool Search(QString str);
 
-    // 打印字典
+    // 鎵撳嵃瀛楀吀
     void PrintDic(TrieNode* root,std::vector<std::vector<char> > &words, std::vector<char> &word) ;
 
 private:

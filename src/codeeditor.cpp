@@ -51,13 +51,14 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 
 void CodeEditor::keyReleaseEvent(QKeyEvent *event)
 {
-    QString currentStr = this->getCurrRowValue();
-    emit signalGetCurrentWord();
+   int key = event->key();
+   if ((key > 'A' && key < 'Z') ||( key > 'a' && key < 'z' ) || event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace)
+        emit signalGetCurrentWord();
+   return QPlainTextEdit::keyReleaseEvent(event) ;
 }
 
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
-
     return QPlainTextEdit::keyPressEvent(e) ;
 }
 

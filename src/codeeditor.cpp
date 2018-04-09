@@ -51,15 +51,13 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 
 void CodeEditor::keyReleaseEvent(QKeyEvent *event)
 {
-
+    QString currentStr = this->getCurrRowValue();
+    emit signalGetCurrentWord();
 }
 
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
-    if(e->key()==Qt::Key_M)
-    {
-        QMessageBox::information(this,QString::fromLocal8Bit("²âÊÔ°´Å¥"),this->getCurrRowValue(),QMessageBox::Ok);
-    }
+
     return QPlainTextEdit::keyPressEvent(e) ;
 }
 

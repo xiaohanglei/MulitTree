@@ -8,6 +8,7 @@
 #include "src/myhighlighter.h"
 #include "src/typedef.h"
 #include <QPushButton>
+#include <QLabel>
 class MainWindow : public QMainWindow,Ui::MainWindow
 {
     Q_OBJECT
@@ -17,10 +18,14 @@ public:
     ~MainWindow();
 public slots:
     void test_but_click();
+    void test_();
 
 private:
      CodeEditor *configEditor;
      QPushButton * but;
+     QLabel * label_DisplayWord;
+     MyHighLighter *highlighter;
+     QStringList list;
 };
 
 #endif // MAINWINDOW_H

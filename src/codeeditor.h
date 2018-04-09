@@ -26,13 +26,16 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void keyReleaseEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *e);
+Q_SIGNALS:
+    void signalGetCurrentWord();
 
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &, int);
-    void keyReleaseEvent(QKeyEvent *event);
-    void keyPressEvent(QKeyEvent *e);
+
 
 private:
     QWidget *lineNumberArea;

@@ -1,4 +1,4 @@
-#include "myhighlighter.h"
+﻿#include "myhighlighter.h"
 #include "string.h"
 
 using namespace std;
@@ -64,9 +64,15 @@ MyHighLighter::MyHighLighter(QTextDocument *parent)
     highlightingRules.append(rule);*/
 }
 
+void MyHighLighter::test(int x, int y, QTextCharFormat tt)
+{
+    setFormat(x,y,tt);
+}
+
 void MyHighLighter::highlightBlock(const QString &text)
 {
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    foreach (const HighlightingRule &rule, highlightingRules)
+    {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
         while (index >= 0) {

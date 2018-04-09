@@ -9,6 +9,7 @@ class MyHighLighter : public QSyntaxHighlighter
 
 public:
     MyHighLighter(QTextDocument *parent = 0);
+    void test(int x,int y, QTextCharFormat tt);
 
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;

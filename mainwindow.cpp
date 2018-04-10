@@ -65,6 +65,9 @@ void MainWindow::test_()
     QTextCharFormat conFormat;
     conFormat.setForeground(Qt::red);
 
+    QTextCharFormat porFormat;
+    porFormat.setForeground(Qt::blue);
+
 
     QTextCursor tc;
     tc =configEditor->textCursor();
@@ -75,8 +78,9 @@ void MainWindow::test_()
 
     for (int i = 0; i < wordsList.size(); i++)
     {
+        int itemp = 0;
         //if (strtemp == wordsList.at(i))
-        if (root->Search(strtemp))
+        if (root->Search(strtemp))//w是否完全匹配
         {
            for (int i = 0 ; i < strtemp.length(); i++)
             {
@@ -88,6 +92,19 @@ void MainWindow::test_()
 
             tc.setBlockCharFormat(conFormat);
             return ;
+        }
+        else if (itemp = root->findPrefix(strtemp))//部分匹配
+        {
+            for (int i = 0 ; i < strtemp.length(); i++)
+             {
+                 tc.deletePreviousChar();
+                 configEditor->setFocus();
+                 configEditor->setTextCursor(tc);
+             }
+             tc.insertText(strtemp,porFormat);
+
+             tc.setBlockCharFormat(conFormat);
+             return ;
         }
     }
 

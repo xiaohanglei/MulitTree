@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gridLayout->addWidget(label_DisplayWord);
     gridLayout->addWidget(configEditor);
     gridLayout->addWidget(but);
+    //but->setVisible(false);
    // highlighter = new MyHighLighter(configEditor->document());
     connect(but,&QPushButton::clicked,this,&MainWindow::test_but_click);
     connect(configEditor,&CodeEditor::signalGetCurrentWord,this,&MainWindow::test_);
@@ -34,18 +35,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initDictionary()
 {
-    //读取文本
-//    std::ifstream in("dictionary.txt");
-//    QString line;
-//    std::string temp;
-//    while (std::getline(in, temp)) // line中不包括每行的换行符
-//    {
-//            line = QString::fromStdString(temp);
-//          root->Insert(line);
-//            //cout << line<<endl;
-//    }
 
-    QFile dataFile("C:/Users/Administrator/Desktop/build-aweSomeEditorhiahia-Desktop_Qt_5_9_1_MinGW_32bit-Debug/debug/dictionary.txt");
+    QString path =QCoreApplication::applicationDirPath() + "/dictionary.txt";
+    QFile dataFile(QCoreApplication::applicationDirPath() + "/dictionary.txt");
 
     if (dataFile.open(QFile::ReadOnly|QIODevice::Text))
     {
@@ -56,7 +48,7 @@ void MainWindow::initDictionary()
         {
             line = data.readLine();
             line.remove('\n');
-            //root->Insert(line);
+            root->Insert(line);
             this->wordsList << line;
         }
     }
@@ -68,33 +60,32 @@ void MainWindow::initDictionary()
 void MainWindow::test_()
 {
     QTextCharFormat keywordFormat;
-    keywordFormat.setForeground(Qt::red);
+    keywordFormat.setForeground(Qt::black);
 
     QTextCharFormat conFormat;
-    conFormat.setForeground(Qt::black);
+    conFormat.setForeground(Qt::red);
 
 
     QTextCursor tc;
     tc =configEditor->textCursor();
 
     tc.setCharFormat(keywordFormat);
-   // tc.insertText("lxh",keywordFormat);
-    //tc.deleteChar();
 
     QString strtemp = tc.block().text();
 
     for (int i = 0; i < wordsList.size(); i++)
     {
-        if (strtemp == wordsList.at(i))
-        //if (root->Search(strtemp))
+        //if (strtemp == wordsList.at(i))
+        if (root->Search(strtemp))
         {
-            for (int i = 0 ; i < strtemp.length(); i++)
+           for (int i = 0 ; i < strtemp.length(); i++)
             {
                 tc.deletePreviousChar();
+                configEditor->setFocus();
                 configEditor->setTextCursor(tc);
             }
             tc.insertText(strtemp,keywordFormat);
-            configEditor->setFocus();
+
             tc.setBlockCharFormat(conFormat);
             return ;
         }
@@ -103,21 +94,18 @@ void MainWindow::test_()
     for (int i = 0 ; i < strtemp.length(); i++)
     {
         tc.deletePreviousChar();
+         configEditor->setFocus();
         configEditor->setTextCursor(tc);
     }
     tc.insertText(strtemp,conFormat);
-    configEditor->setFocus();
+
 
 }
 void MainWindow::test_but_click()
 {
-    //
-    //QString content = configEditor->document()->findBlockByLineNumber(1).text();
-    //QMessageBox::information(this,QString::fromLocal8Bit("测试按钮"),content,QMessageBox::Ok);
-    //QMessageBox::information(this,QString::fromLocal8Bit("测试按钮"),configEditor->getCurrRowValue(),QMessageBox::Ok);
-    //label_DisplayWord->setText(configEditor->getCurrRowValue());
 
-//    QTextDocument * dd = configEditor->document();
+
+    QTextDocument * dd = configEditor->document();
 
     QTextCharFormat keywordFormat;
     keywordFormat.setForeground(Qt::red);
@@ -126,43 +114,14 @@ void MainWindow::test_but_click()
     conFormat.setForeground(Qt::black);
 
 
-//    dd->setPlainText("gtttttttttttttttttt");
-
-//    QFont font;
-//    font.setUnderline(true);
-//     highlighter->test(1,3,keywordFormat);
-
-
     QTextCursor tc;
     tc =configEditor->textCursor();
+    int a = tc.columnNumber();
 
-    tc.setCharFormat(keywordFormat);
-   // tc.insertText("lxh",keywordFormat);
-    //tc.deleteChar();
-
-    QString strtemp = tc.block().text();
-    for (int i = 0 ; i < strtemp.length(); i++)
-    {
-        tc.deletePreviousChar();
-        configEditor->setTextCursor(tc);
-    }
-    tc.insertText(strtemp,keywordFormat);
+    int position =dd->findBlockByNumber ( 2-1 ).position();
+    tc.setPosition(position,QTextCursor::MoveAnchor);
     configEditor->setFocus();
-
-    //tc.insertText("a",conFormat);// tc.deletePreviousChar();
-
-
-
-   // QTextBlockFormat tempformat;
-//    tempformat.setForeground(Qt::red);
-   // tc.setBlockFormat(tempformat);
-    //QMessageBox::information(this,QString::fromLocal8Bit("测试按钮"),QString::number(c,10),QMessageBox::Ok);
-
-//    label_DisplayWord->setText(configEditor->getCurrRowValue());
-//    QFont font;
-//    font.setUnderline(true);
-//    configEditor->setFont(font);
-
+    configEditor->setTextCursor( tc );
 }
 
 

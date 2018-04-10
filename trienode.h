@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <vector>
-#define MAX 26
+#define MAX 27
 
 struct TrieNode
 {

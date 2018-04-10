@@ -14,6 +14,9 @@ void MultiTree::Insert( QString str)
     for (int i = 0; i < size; ++i)
     {
         val = str.at(i).toLatin1() - 'a';
+
+        if (str.at(i).toLatin1() == '\'')
+            val = MAX - 1;
         // 之前没有该字符
         if (p->next[val] == NULL)
         {
@@ -32,8 +35,10 @@ void MultiTree::Delete(QString str) {
     // 一个一个字符插入
     for (int i = 0; i < size; ++i) {
         val = str.at(i).toLatin1() - 'a';
+
         // 删除的字符串不在字典中
-        if (p->next[val] == NULL) {
+        if (p->next[val] == NULL)
+        {
             return;
         }//if
         p = p->next[val];

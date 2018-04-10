@@ -36,6 +36,8 @@ public:
     // 鏌ユ壘
     bool Search(QString str);
 
+    bool findPrefix(QString str);
+
     // 鎵撳嵃瀛楀吀
     void PrintDic(TrieNode* root,std::vector<std::vector<char> > &words, std::vector<char> &word) ;
 

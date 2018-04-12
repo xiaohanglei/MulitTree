@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     configEditor = new CodeEditor();
     label_DisplayWord = new QLabel("");
     but = new QPushButton("testbutton");
+    but->setVisible(false);
     configEditor->setMode(EDIT);
     gridLayout->addWidget(label_DisplayWord);
     gridLayout->addWidget(configEditor);
@@ -38,6 +39,10 @@ void MainWindow::initDictionary()
 
     QString path =QCoreApplication::applicationDirPath() + "/dictionary.txt";
     QFile dataFile(QCoreApplication::applicationDirPath() + "/dictionary.txt");
+    if (!dataFile.exists())
+    {
+        QMessageBox::information(this,"Error!","Not Find Dictionary !",QMessageBox::Ok);
+    }
 
     if (dataFile.open(QFile::ReadOnly|QIODevice::Text))
     {
@@ -74,13 +79,19 @@ void MainWindow::test_()
 
     tc.setCharFormat(keywordFormat);
 
+    //移动光标到末尾
+
+    tc.movePosition(QTextCursor::End);
+   configEditor->setTextCursor(tc);
+
     QString strtemp = tc.block().text();
+    QString temp = strtemp.toLower();
 
     for (int i = 0; i < wordsList.size(); i++)
     {
         int itemp = 0;
         //if (strtemp == wordsList.at(i))
-        if (root->Search(strtemp))//w是否完全匹配
+        if (root->Search(temp))//w是否完全匹配
         {
            for (int i = 0 ; i < strtemp.length(); i++)
             {
@@ -93,7 +104,7 @@ void MainWindow::test_()
             tc.setBlockCharFormat(conFormat);
             return ;
         }
-        else if (itemp = root->findPrefix(strtemp))//部分匹配
+        else if (itemp = root->findPrefix(temp))//部分匹配
         {
             for (int i = 0 ; i < strtemp.length(); i++)
              {

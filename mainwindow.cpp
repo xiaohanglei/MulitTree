@@ -102,7 +102,6 @@ void MainWindow::test_()
                  configEditor->setTextCursor(tc);
              }
              tc.insertText(strtemp,porFormat);
-
              tc.setBlockCharFormat(conFormat);
              return ;
         }
@@ -122,23 +121,25 @@ void MainWindow::test_but_click()
 {
 
 
-    QTextDocument * dd = configEditor->document();
-
     QTextCharFormat keywordFormat;
-    keywordFormat.setForeground(Qt::red);
+    keywordFormat.setForeground(Qt::black);
 
     QTextCharFormat conFormat;
-    conFormat.setForeground(Qt::black);
+    conFormat.setForeground(Qt::red);
+
+    QTextCharFormat porFormat;
+    porFormat.setForeground(Qt::blue);
 
 
     QTextCursor tc;
     tc =configEditor->textCursor();
-    int a = tc.columnNumber();
 
-    int position =dd->findBlockByNumber ( 2-1 ).position();
-    tc.setPosition(position,QTextCursor::MoveAnchor);
-    configEditor->setFocus();
-    configEditor->setTextCursor( tc );
+    tc.setCharFormat(keywordFormat);
+
+    QString strtemp = tc.block().text();
+
+    QString str = strtemp.split(" ").last();
+    QMessageBox::information(this,"test",str,QMessageBox::Ok);
 }
 
 

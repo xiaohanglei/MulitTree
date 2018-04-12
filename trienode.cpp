@@ -93,7 +93,6 @@ bool MultiTree::findPrefix(QString str)
          // 继续下一个字符
         p = p->next[inn];
     }//for
-	return p->count > 0;
 }// 打印字典
 void MultiTree::PrintDic(TrieNode* root,std::vector<std::vector<char> > &words, std::vector<char> &word) {
     if (root == NULL) {

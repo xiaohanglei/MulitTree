@@ -10,6 +10,8 @@
 #include <QPushButton>
 #include <QLabel>
 #include "trienode.h"
+#include <unordered_map>
+#include <string>
 class MainWindow : public QMainWindow,Ui::MainWindow
 {
     Q_OBJECT
@@ -19,17 +21,16 @@ public:
     ~MainWindow();
     void initDictionary();
 public slots:
-    void test_but_click();
-    void test_();
+    void Deal();
 
 private:
      CodeEditor *configEditor;
-     QPushButton * but;
-     QLabel * label_DisplayWord;
-     MyHighLighter *highlighter;
+
      QStringList list;
      MultiTree * root;
      QStringList wordsList;
+     std::unordered_map<std::string, double>wordzz,nonezz;
+
 };
 
 #endif // MAINWINDOW_H

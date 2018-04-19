@@ -82,34 +82,39 @@ void MainWindow::Deal()
     std::unordered_map<std::string, double>::const_iterator got = wordzz.find(temp.toStdString());//
 
 
-    for (int i = 0; i < wordsList.size(); i++)//循环遍历多叉树
+    if (got != wordzz.end())//判断是否在map中找到该单词
     {
-        if (root->Search(temp))//是否完全匹配
-        {
-           for (int i = 0 ; i < strtemp.length(); i++)//如果完全匹配多叉树中的单词,则依次删除当前行的字符
-            {
-                tc.deletePreviousChar();
-                configEditor->setFocus();
-                configEditor->setTextCursor(tc);
-            }
-            tc.insertText(strtemp,keywordFormat);//然后设置单词对应的颜色，并重新输出字符串
+        for (int i = 0 ; i < strtemp.length(); i++)//如果完全匹配多叉树中的单词,则依次删除当前行的字符
+         {
+             tc.deletePreviousChar();
+             configEditor->setFocus();
+             configEditor->setTextCursor(tc);
+         }
+         tc.insertText(strtemp,keywordFormat);//然后设置单词对应的颜色，并重新输出字符串
 
-            tc.setBlockCharFormat(conFormat);//设置为默认颜色
-            return ;//结束
-        }
-        else if (root->findPrefix(temp))//部分匹配
+         tc.setBlockCharFormat(conFormat);//设置为默认颜色
+         return ;//结束
+    }
+    else
+    {
+        for (int i = 0; i < wordsList.size(); i++)//循环遍历多叉树，查找部分匹配
         {
-            for (int i = 0 ; i < strtemp.length(); i++)//如果部分匹配多叉树中的单词,则依次删除当前行的字符
-             {
-                 tc.deletePreviousChar();
-                 configEditor->setFocus();
-                 configEditor->setTextCursor(tc);
-             }
-             tc.insertText(strtemp,porFormat);//同上
-             tc.setBlockCharFormat(conFormat);
-             return ;
+           if (root->findPrefix(temp))//部分匹配
+            {
+                for (int i = 0 ; i < strtemp.length(); i++)//如果部分匹配多叉树中的单词,则依次删除当前行的字符
+                 {
+                     tc.deletePreviousChar();
+                     configEditor->setFocus();
+                     configEditor->setTextCursor(tc);
+                 }
+                 tc.insertText(strtemp,porFormat);//同上
+                 tc.setBlockCharFormat(conFormat);
+                 return ;
+            }
         }
     }
+
+
 
     for (int i = 0 ; i < strtemp.length(); i++)//如果既不完全匹配也不部分匹配，则先删除字符，
     {

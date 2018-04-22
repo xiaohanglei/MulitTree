@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QFile>
 #include <unordered_map>
+#include <QDebug>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -72,12 +73,22 @@ void MainWindow::Deal()
 
     tc.setCharFormat(keywordFormat);//设置当前管光标所在的字符为黑色格式
 
-    //移动光标到末尾
-    tc.movePosition(QTextCursor::End);
-   configEditor->setTextCursor(tc);//设置编辑框的光标为当前移动过后的位置
+
 
     QString strtemp = tc.block().text();//获得当前光标所在的行的字符串
     QString temp = strtemp.toLower();//将字符串转换成小写
+
+
+    //test
+    QTextLayout *pLayout = tc.block().layout();
+
+    int nCurpos = tc.position() - tc.block().position();//获得当前列的位置
+   // int nTextline = pLayout->lineForTextPosition(nCurpos).lineNumber() + tc.block().firstLineNumber();
+     // qDebug()<<nTextline << "," << nCurpos <<endl;
+
+      //移动光标到末尾
+     tc.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,strtemp.length()-nCurpos);
+     configEditor->setTextCursor(tc);//设置编辑框的光标为当前移动过后的位置
 
     std::unordered_map<std::string, double>::const_iterator got = wordzz.find(temp.toStdString());//
 
